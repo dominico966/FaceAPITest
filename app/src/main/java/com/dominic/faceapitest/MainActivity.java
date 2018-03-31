@@ -20,6 +20,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.dominic.skuface.FaceApi;
+import com.dominic.skuface.FaceDetectionCamera;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     // -------------------------------------------------------------
 
                     for (FaceApi.Face face : faceAPI.getFaceList()) {
-                        if (face.faceRectangle.contains((int) originalImageOffsetX, (int) originalImageOffsetY)) {
+                        if (face.getFaceRectangle().contains((int) originalImageOffsetX, (int) originalImageOffsetY)) {
                             Context context = MainActivity.this;
                             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
                             View dialogView = layoutInflater.inflate(R.layout.dialog_face_emotion, null, false);

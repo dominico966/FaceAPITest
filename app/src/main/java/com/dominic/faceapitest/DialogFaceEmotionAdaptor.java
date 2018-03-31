@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.dominic.skuface.FaceApi;
+
 import java.lang.reflect.Field;
 
 /**
@@ -66,9 +68,9 @@ public class DialogFaceEmotionAdaptor extends BaseAdapter {
 
         public ItemData(int i) {
             try {
-                Field field = face.emotion.getClass().getDeclaredFields()[i];
+                Field field = face.getEmotion().getClass().getDeclaredFields()[i];
                 name = field.getName();
-                value = field.getDouble(face.emotion);
+                value = field.getDouble(face.getEmotion());
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }

@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FaceAPITest.iml" filepath="$PROJECT_DIR$/FaceAPITest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/FaceAPITest.iml" filepath="$PROJECT_DIR$/.idea/FaceAPITest.iml" />
       <module fileurl="file://E:\Projects\Android\FaceAPITest\FaceAPITest.iml" filepath="E:\Projects\Android\FaceAPITest\FaceAPITest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://E:\Projects\Android\FaceAPITest\app\app.iml" filepath="E:\Projects\Android\FaceAPITest\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/skuface/skuface.iml" filepath="$PROJECT_DIR$/skuface/skuface.iml" />
     </modules>
   </component>
 </project>

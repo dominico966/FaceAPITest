@@ -1,4 +1,4 @@
-package com.dominic.faceapitest;
+package com.dominic.skuface;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -79,7 +79,7 @@ public class FaceApi {
 
         if (faces != null) {
             for (FaceApi.Face face : faces) {
-                Rectangle faceRectangle = face.faceRectangle;
+                Rectangle faceRectangle = face.getFaceRectangle();
                 canvas.drawRect(
                         faceRectangle.x,
                         faceRectangle.y,
@@ -199,13 +199,45 @@ public class FaceApi {
      * 얼굴들에 대한 정보를 저장하는 클래스
      */
     public static class Face {
-        public String faceId;
-        public Rectangle faceRectangle;
-        public Emotion emotion;
+        private String faceId;
+
+        /**
+         *  인식된 얼굴의 비트맵 좌표를 나타낸다. 외부에서 접근 할 때 오류가 발생하면 'com.android.support.constraint:constraint-layout:1.0.2'를 'build.gradle'의 'dependencies' 에 추가한다.
+         */
+        private Rectangle faceRectangle;
+
+        private Emotion emotion;
 
         public Face(String faceId, Rectangle faceRectangle, Emotion emotion) {
+            this.setFaceId(faceId);
+            this.setFaceRectangle(faceRectangle);
+            this.setEmotion(emotion);
+        }
+
+        public String getFaceId() {
+            return faceId;
+        }
+
+        public void setFaceId(String faceId) {
             this.faceId = faceId;
+        }
+
+        /**
+         *  인식된 얼굴의 비트맵 좌표를 나타낸다. 외부에서 접근 할 때 오류가 발생하면 'com.android.support.constraint:constraint-layout:1.0.2'를 'build.gradle'의 'dependencies' 에 추가한다.
+         */
+        public Rectangle getFaceRectangle() {
+            return faceRectangle;
+        }
+
+        public void setFaceRectangle(Rectangle faceRectangle) {
             this.faceRectangle = faceRectangle;
+        }
+
+        public Emotion getEmotion() {
+            return emotion;
+        }
+
+        public void setEmotion(Emotion emotion) {
             this.emotion = emotion;
         }
 

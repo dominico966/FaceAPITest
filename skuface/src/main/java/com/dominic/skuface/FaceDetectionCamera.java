@@ -1,4 +1,4 @@
-package com.dominic.faceapitest;
+package com.dominic.skuface;
 
 import android.content.Context;
 import android.graphics.Bitmap;

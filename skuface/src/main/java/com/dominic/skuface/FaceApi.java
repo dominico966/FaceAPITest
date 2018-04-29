@@ -106,73 +106,78 @@ public class FaceApi {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 
-        OkHttpClient client = new OkHttpClient();
+        final OkHttpClient client = new OkHttpClient();
 
         String url = REST_URL
                 + "?returnFaceId=true"
                 + "&returnFaceLandmarks=false"
                 + "&returnFaceAttributes=emotion";
 
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .addHeader("Content-Type", "application/octet-stream")
                 .addHeader("Ocp-Apim-Subscription-Key", SERVICE_KEY)
                 .url(url)
                 .post(RequestBody.create(MediaType.parse("application/octet-stream"), baos.toByteArray()))
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
+        new Thread() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void run() {
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
 
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    final String responseStatus = response.toString();
-                    final JSONArray result = new JSONArray(response.body().string());
-
-                    for (int i = 0; i < result.length(); i++) {
-                        JSONObject face = result.getJSONObject(i);
-
-                        String faceId = face.getString("faceId");
-
-                        JSONObject faceRectangle = face.getJSONObject("faceRectangle");
-                        Rectangle r = new Rectangle();
-                        r.width = faceRectangle.getInt("width");
-                        r.height = faceRectangle.getInt("height");
-                        r.x = faceRectangle.getInt("left");
-                        r.y = faceRectangle.getInt("top");
-
-                        JSONObject faceAttributes = face.getJSONObject("faceAttributes");
-                        JSONObject emotion = faceAttributes.getJSONObject("emotion");
-
-                        FaceApi.Face.Emotion e = new FaceApi.Face.Emotion(
-                                emotion.getDouble("anger"),
-                                emotion.getDouble("contempt"),
-                                emotion.getDouble("disgust"),
-                                emotion.getDouble("fear"),
-                                emotion.getDouble("happiness"),
-                                emotion.getDouble("neutral"),
-                                emotion.getDouble("sadness"),
-                                emotion.getDouble("surprise")
-                        );
-
-                        faceList.add(new FaceApi.Face(faceId, r, e));
                     }
 
-                    Bitmap framedImage = drawFaceRectanglesOnBitmap(imageBitmap,getFaceList());
-                    if(onResponseListener != null){
-                        onResponseListener.onResponse(framedImage,getFaceList());
-                    } else {
-                        framedImage.recycle();
-                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            final String responseStatus = response.toString();
+                            final JSONArray result = new JSONArray(response.body().string());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                            for (int i = 0; i < result.length(); i++) {
+                                JSONObject face = result.getJSONObject(i);
+
+                                String faceId = face.getString("faceId");
+
+                                JSONObject faceRectangle = face.getJSONObject("faceRectangle");
+                                Rectangle r = new Rectangle();
+                                r.width = faceRectangle.getInt("width");
+                                r.height = faceRectangle.getInt("height");
+                                r.x = faceRectangle.getInt("left");
+                                r.y = faceRectangle.getInt("top");
+
+                                JSONObject faceAttributes = face.getJSONObject("faceAttributes");
+                                JSONObject emotion = faceAttributes.getJSONObject("emotion");
+
+                                FaceApi.Face.Emotion e = new FaceApi.Face.Emotion(
+                                        emotion.getDouble("anger"),
+                                        emotion.getDouble("contempt"),
+                                        emotion.getDouble("disgust"),
+                                        emotion.getDouble("fear"),
+                                        emotion.getDouble("happiness"),
+                                        emotion.getDouble("neutral"),
+                                        emotion.getDouble("sadness"),
+                                        emotion.getDouble("surprise")
+                                );
+
+                                faceList.add(new FaceApi.Face(faceId, r, e));
+                            }
+
+                            Bitmap framedImage = drawFaceRectanglesOnBitmap(imageBitmap,getFaceList());
+                            if(onResponseListener != null){
+                                onResponseListener.onResponse(framedImage,getFaceList());
+                            } else {
+                                framedImage.recycle();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
+        }.run();
     }
 
     /**

@@ -35,10 +35,9 @@ public class FaceApi {
 
     private static FaceApi instance = null;
 
-    private static final String SERVICE_KEY = "f4bc7755bb894e229ebbcfa5e824c484";
+    private static final String SERVICE_KEY = "928e20ee83f847ab8acd83affaf1a994";
 
-    //private static final String REST_URL = "https://eastasia.api.cognitive.microsoft.com/face/v1.0/detect";
-    private static final String REST_URL = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+    private static final String REST_URL = "https://eastasia.api.cognitive.microsoft.com/face/v1.0/detect";
 
     private Vector<Face> faceList = new Vector<>();
 

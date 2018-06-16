@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
@@ -246,7 +247,7 @@ public class FaceApi {
             this.emotion = emotion;
         }
 
-        public static class Emotion {
+        public static class Emotion implements Serializable {
             public double anger;
             public double contempt;
             public double disgust;

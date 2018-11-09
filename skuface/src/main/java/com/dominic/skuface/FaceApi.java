@@ -36,7 +36,7 @@ public class FaceApi {
 
     private static FaceApi instance = null;
 
-    private static final String SERVICE_KEY = "928e20ee83f847ab8acd83affaf1a994";
+    private static final String SERVICE_KEY = "insert your key";
 
     private static final String REST_URL = "https://eastasia.api.cognitive.microsoft.com/face/v1.0/detect";
 
